@@ -43,7 +43,7 @@ export type PageContent = {
   faq: FaqItem[];
 };
 
-const CORE_URL = "https://store-audit.wisdmlabs.com/";
+const CORE_URL = "https://services.wisdmlabs.com/";
 
 export function metaFor(c: PageContent): Metadata {
   return {
@@ -171,7 +171,7 @@ export const CORE: PageContent = {
         <>
           That&rsquo;s our{" "}
           <a
-            href="https://migration-check.wisdmlabs.com"
+            href="https://services.wisdmlabs.com/migration"
             className="font-medium text-ink underline hover:text-navy"
           >
             Migration Risk Assessment

@@ -6,12 +6,12 @@ import type { PageContent } from "./pages";
 
 // Migration core page (`/migration`) content. Copy is from the approved migration
 // copy-deck.md (Section A), trimmed to the lean-hero rules in DESIGN-PLAYBOOK.md.
-// Hosted intent: migration-check.wisdmlabs.com (mapped at deploy); built here as a
-// route in the same repo so the design system stays single-sourced (playbook §10).
+// Hosted at services.wisdmlabs.com/migration; built here as a route in the same
+// repo so the design system stays single-sourced (playbook §10).
 
 // Intended canonical host for this page set (deck B3). The route in this repo is
 // `/migration`; the deploy maps that to the subdomain root.
-const MIGRATION_CORE_URL = "https://migration-check.wisdmlabs.com/";
+const MIGRATION_CORE_URL = "https://services.wisdmlabs.com/migration";
 
 export const migrationMeta: Metadata = {
   title: "Migrate to WooCommerce: Zero Data Loss, SEO Preserved | WisdmLabs",

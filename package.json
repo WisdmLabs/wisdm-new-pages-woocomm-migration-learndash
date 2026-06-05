@@ -2,7 +2,7 @@
   "name": "store-audit-lp",
   "version": "0.1.0",
   "private": true,
-  "description": "WisdmLabs WooCommerce lead-gen landing pages (store-audit.wisdmlabs.com)",
+  "description": "WisdmLabs WooCommerce lead-gen landing pages (services.wisdmlabs.com)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
