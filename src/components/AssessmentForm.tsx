@@ -72,6 +72,17 @@ export function AssessmentForm({
         );
         if (!res.ok) throw new Error("submit_failed");
       }
+      // Fire-and-forget email notification — don't block the redirect on it.
+      fetch("/api/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(form.get("name") ?? ""),
+          email: String(form.get("email") ?? ""),
+          message: String(form.get("details") ?? ""),
+          page: window.location.pathname,
+        }),
+      }).catch(() => {});
       // Conversion fires on /thank-you load (deck §4.3–4.4), not here.
       router.push("/thank-you");
     } catch {
