@@ -1,57 +1,109 @@
-# store-audit-lp
+# WisdmLabs Services Landing Pages
 
-WooCommerce lead-gen landing pages for **store-audit.wisdmlabs.com** — Next.js (App Router) on Vercel, visually matched to wisdmlabs.com.
+Lead-gen landing pages for **services.wisdmlabs.com** — Next.js (App Router) on Vercel, visually matched to wisdmlabs.com.
 
-Built from the approved copy deck (`campaigns/2026-q3/lead-gen-pilot/landing-pages/woocommerce/copy-deck.md`) and build brief `2026-06-03-woocommerce-leadgen-landing-pages-build`.
+## Live Pages
 
-## Status
-
-**Phase 1 (this slice):** shared chrome + modules + the `/` core page + `/thank-you` stub, for design sign-off.
-**Phase 2 (after sign-off):** `/outgrown-shopify`, `/subscription-billing`, `/b2b-wholesale`, finished `/thank-you` scheduler.
+| Page | URL |
+|------|-----|
+| WooCommerce Development | [services.wisdmlabs.com](https://services.wisdmlabs.com) |
+| Migration Hub | [/migration](https://services.wisdmlabs.com/migration) |
+| Shopify → WooCommerce | [/migration/shopify-to-woocommerce](https://services.wisdmlabs.com/migration/shopify-to-woocommerce) |
+| Magento → WooCommerce | [/migration/magento-to-woocommerce](https://services.wisdmlabs.com/migration/magento-to-woocommerce) |
+| BigCommerce → WooCommerce | [/migration/bigcommerce-to-woocommerce](https://services.wisdmlabs.com/migration/bigcommerce-to-woocommerce) |
+| PrestaShop → WooCommerce | [/migration/prestashop-to-woocommerce](https://services.wisdmlabs.com/migration/prestashop-to-woocommerce) |
+| Thank You | [/thank-you](https://services.wisdmlabs.com/thank-you) |
 
 ## Stack
 
-- Next.js 15 (App Router), React 19, TypeScript
-- Tailwind CSS 3.4 — brand tokens in `tailwind.config.ts` (reverse-engineered from wisdmlabs.com: navy `#131821`, ink `#121519`, amber accent `#FFB300`)
-- Inter self-hosted via `next/font/google` (no runtime Google request)
+- Next.js 16 (App Router), React 19, TypeScript
+- Tailwind CSS — brand tokens in `tailwind.config.ts` (navy `#131821`, ink `#121519`, amber `#FFB300`)
+- Inter via `next/font/google`
+- Deployed on Vercel
 
-## Local development
+## Local Development
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build / typecheck
+cp .env.example .env.local   # fill in real values
+npm run dev                   # http://localhost:3000
+npm run build                 # production build / typecheck
 ```
 
-## Design decisions (locked)
+## Form Submission Flow
 
-1. **Branded chrome, no nav exits** — same logo/colors/font as wisdmlabs.com, but the site nav menu is removed so paid traffic has no exit. Only on-page actions + the footer brand-halo link back to wisdmlabs.com.
-2. **Pixel-faithful** — tokens and logo extracted from the live site.
-3. **Env-placeholder integrations** — see below; build runs with blanks.
-4. **Core page first** — variant pages replicate the shared modules after sign-off.
+Every page has an assessment form (`src/components/AssessmentForm.tsx`) that:
 
-## Integrations (`.env.local`)
+1. **Submits to HubSpot** via the Forms API (`api.hsforms.com`) — creates a Contact with name, email, website, budget range, project details, and attribution data (gclid, UTMs, landing page path)
+2. **Sends email notification** to the sales team via `/api/notify` (Resend) — includes lead name, email, message, country (auto-detected from IP), and source page
+3. **Redirects to /thank-you** with a HubSpot meetings scheduler embed
 
-Copy `.env.example` → `.env.local` and fill before launch. With blanks, the form
-simulates submit and redirects to `/thank-you`; conversion tags no-op.
+### Budget Field Values
 
-| Var | Purpose |
+The budget dropdown shows formatted labels but sends HubSpot-compatible internal values:
+
+| Display Label | Value Sent to HubSpot |
 |---|---|
-| `NEXT_PUBLIC_HUBSPOT_PORTAL_ID` / `NEXT_PUBLIC_HUBSPOT_FORM_GUID` | Form submit → HubSpot Contact + Deal |
-| `NEXT_PUBLIC_HUBSPOT_MEETINGS_URL` | Meetings scheduler embed on `/thank-you` |
-| `NEXT_PUBLIC_GA4_MEASUREMENT_ID` | GA4 `generate_lead` on `/thank-you` |
-| `NEXT_PUBLIC_GADS_CONVERSION_ID` / `NEXT_PUBLIC_GADS_CONVERSION_LABEL` | Google Ads conversion on `/thank-you` |
+| <$3,000 | `<$3000` |
+| $3,000–$5,000 | `$3000-$5000` |
+| $5,000–$10,000 | `$5000-$10000` |
+| Above $10,000 | `Above $10000` |
 
-Attribution (`gclid`, UTMs, landing path) is captured on landing into `sessionStorage`
-(`src/lib/tracking.ts`) and attached to the HubSpot submission.
+### Email Notification Recipients
+
+On each form submission, `/api/notify` sends an email to:
+- sales@wisdmlabs.com
+- sales-lead@wisdmlabs.com
+- csm@wisdmlabs.com
+- sme@wisdmlabs.com
+- helpdesk@wisdmlabs.com
+- tariq.kotwal@wisdmlabs.com
+- arunesh.parab@wisdmlabs.com
+- shailesh.vishwakarma@wisdmlabs.com
+- growth@wisdmlabs.com
+
+Country is auto-detected from the visitor's IP via Vercel's `x-vercel-ip-country` header.
+
+## Attribution Tracking
+
+`src/lib/tracking.ts` captures attribution data on landing:
+- `gclid` — Google Ads click ID
+- `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`
+- `page_path` — first landing page in the session
+
+Data is stored in `sessionStorage` and attached to the HubSpot form submission.
+
+## Conversion Tracking
+
+Fires on `/thank-you` page load:
+- **GA4** — `generate_lead` event
+- **Google Ads** — conversion pixel
+
+## Environment Variables
+
+Copy `.env.example` → `.env.local` for local dev. Set in Vercel for production.
+
+| Variable | Purpose |
+|---|---|
+| `NEXT_PUBLIC_HUBSPOT_PORTAL_ID` | HubSpot portal ID |
+| `NEXT_PUBLIC_HUBSPOT_FORM_GUID` | HubSpot form GUID |
+| `NEXT_PUBLIC_HUBSPOT_MEETINGS_URL` | Meetings scheduler on /thank-you |
+| `NEXT_PUBLIC_GA4_MEASUREMENT_ID` | GA4 measurement ID |
+| `NEXT_PUBLIC_GADS_CONVERSION_ID` | Google Ads conversion ID |
+| `NEXT_PUBLIC_GADS_CONVERSION_LABEL` | Google Ads conversion label |
+| `RESEND_API_KEY` | Resend API key for email notifications |
+| `RESEND_FROM_EMAIL` | Sender address (requires verified domain in Resend) |
 
 ## Deploy
 
-Vercel project → set the env vars above → point `store-audit.wisdmlabs.com` (DNS owner TBC) at the deployment.
+Pushes to `main` auto-deploy to Vercel. For manual deploy:
 
-## Pre-launch checklist
+```bash
+npx vercel --prod
+```
 
-- [ ] Real HubSpot / GA4 / Google Ads IDs in Vercel env
-- [ ] Subdomain + DNS confirmed and pointed at Vercel
-- [ ] Resolve deck `[VERIFY]` copy items (B2B case study; 13-vs-12 years; current 125+ migrations figure)
-- [ ] Privacy / Terms / Contact pages added on the subdomain (footer links currently stubbed)
+## Design Decisions
+
+1. **No nav exits** — paid traffic has no navigation menu; only on-page CTAs and footer link back to wisdmlabs.com
+2. **Env-placeholder integrations** — build works with blank env vars (form simulates submit, conversion tags no-op)
+3. **Fire-and-forget notifications** — email notification doesn't block the user's redirect to /thank-you
