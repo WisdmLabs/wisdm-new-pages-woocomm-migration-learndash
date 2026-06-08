@@ -5,7 +5,12 @@ import { useRouter } from "next/navigation";
 import { captureAttribution, readAttribution, type Attribution } from "@/lib/tracking";
 
 // Mirrors wisdmlabs.com contact form + deck form spec. Budget is the ICP qualifier.
-const BUDGET_OPTIONS = ["<$3,000", "$3,000–$5,000", "$5,000–$10,000", "Above $10,000"];
+const BUDGET_OPTIONS = [
+  { label: "<$3,000", value: "<$3000" },
+  { label: "$3,000–$5,000", value: "$3000-$5000" },
+  { label: "$5,000–$10,000", value: "$5000-$10000" },
+  { label: "Above $10,000", value: "Above $10000" },
+];
 
 const PORTAL_ID = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
 const FORM_GUID = process.env.NEXT_PUBLIC_HUBSPOT_FORM_GUID;
@@ -99,8 +104,8 @@ export function AssessmentForm({
               Select a range
             </option>
             {BUDGET_OPTIONS.map((o) => (
-              <option key={o} value={o}>
-                {o}
+              <option key={o.value} value={o.value}>
+                {o.label}
               </option>
             ))}
           </select>
