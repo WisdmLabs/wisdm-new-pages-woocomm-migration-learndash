@@ -1,8 +1,5 @@
-import { LandingPage } from "@/components/LandingPage";
-import { CORE, metaFor } from "@/content/pages";
-
-export const metadata = metaFor(CORE);
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <LandingPage content={CORE} />;
+  redirect("/woocommerce-store-development");
 }

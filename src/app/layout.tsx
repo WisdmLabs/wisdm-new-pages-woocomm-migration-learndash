@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "WisdmLabs — Custom WooCommerce Development",
+  title: "Custom WooCommerce Development Services for Your Store",
   robots: { index: false, follow: true },
 };
 

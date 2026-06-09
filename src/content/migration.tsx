@@ -11,12 +11,12 @@ import type { PageContent } from "./pages";
 
 // Intended canonical host for this page set (deck B3). The route in this repo is
 // `/migration`; the deploy maps that to the subdomain root.
-const MIGRATION_CORE_URL = "https://services.wisdmlabs.com/migration";
+const MIGRATION_CORE_URL = "https://services.wisdmlabs.com/woocommerce-migration-services";
 
 export const migrationMeta: Metadata = {
-  title: "Migrate to WooCommerce: Zero Data Loss, SEO Preserved | WisdmLabs",
+  title: "Get Expert WooCommerce Migration Services Today",
   description:
-    "Official WooCommerce migration partners. 300+ migrations from Shopify, Magento, BigCommerce & PrestaShop with zero data loss and full SEO preservation. Get a free Migration Risk Assessment.",
+    "Move your store with WooCommerce migration experts. Get secure data transfer, SEO retention, and a smooth migration process.",
   // Paid LP: noindex but crawlable for the Ads quality bot (deck B3).
   robots: { index: false, follow: true },
   alternates: { canonical: MIGRATION_CORE_URL },
@@ -338,11 +338,11 @@ export const CORE_PAGE: MigrationPageData = {
 
 /* ── C1. Shopify (flagship) ───────────────────────────────────────────────── */
 export const SHOPIFY: MigrationPageData = {
-  slug: "shopify-to-woocommerce",
+  slug: "shopify-to-woocommerce-migration",
   sourceName: "Shopify",
   meta: variantMeta(
-    "Migrate Shopify to WooCommerce: Zero Data Loss, SEO Preserved | WisdmLabs",
-    "Move from Shopify to WooCommerce without losing orders, customers, subscriptions, or SEO. Official WooCommerce migration partners, 300+ migrations, zero data loss. Get a free Migration Risk Assessment."
+    "Migrate Shopify to WooCommerce With Experts",
+    "Get Shopify to WooCommerce migration done right. Move products, customers, and orders with expert support and SEO care."
   ),
   hero: {
     eyebrow: "Shopify → WooCommerce Migration · Official WooExpert Partners",
@@ -382,8 +382,8 @@ export const MAGENTO: MigrationPageData = {
   slug: "magento-to-woocommerce",
   sourceName: "Magento",
   meta: variantMeta(
-    "Migrate Magento to WooCommerce: 7-Day Migration, Zero Data Loss | WisdmLabs",
-    "Move off Magento’s maintenance burden to WooCommerce without losing catalog, orders, or SEO. We’ve delivered a full Magento migration in 7 days. Official Woo partners. Get a free Migration Risk Assessment."
+    "Magento to WooCommerce Migration Services",
+    "Get Magento to WooCommerce migration done right. Move products, customers, and orders with expert support and SEO retention."
   ),
   hero: {
     eyebrow: "Magento → WooCommerce Migration · Official WooExpert Partners",

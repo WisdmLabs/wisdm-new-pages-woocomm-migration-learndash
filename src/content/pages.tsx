@@ -43,7 +43,7 @@ export type PageContent = {
   faq: FaqItem[];
 };
 
-const CORE_URL = "https://services.wisdmlabs.com/";
+const CORE_URL = "https://services.wisdmlabs.com/woocommerce-store-development";
 
 export function metaFor(c: PageContent): Metadata {
   return {
@@ -51,7 +51,7 @@ export function metaFor(c: PageContent): Metadata {
     description: c.meta.description,
     // Paid LPs: noindex but crawlable for the Ads quality bot (parent plan §7).
     robots: { index: false, follow: true },
-    alternates: { canonical: c.canonical ? CORE_URL : `${CORE_URL}${c.slug}` },
+    alternates: { canonical: c.canonical ? CORE_URL : `${CORE_URL}/${c.slug}` },
   };
 }
 
@@ -60,9 +60,9 @@ export const CORE: PageContent = {
   slug: "",
   canonical: true,
   meta: {
-    title: "Custom WooCommerce Development for Brands That Outgrew the Template | WisdmLabs",
+    title: "Custom WooCommerce Development Services for Your Store",
     description:
-      "Senior WooCommerce engineering for $500K–$10M brands with complex catalog, subscription, B2B, multi-currency, or ERP logic. 450+ builds, 98% client satisfaction. Book a free Commerce Platform Assessment.",
+      "Get custom WooCommerce development services built for growth. Improve user experience, add custom features, and scale your store today.",
   },
   hero: {
     eyebrow: "Custom WooCommerce development",
@@ -171,7 +171,7 @@ export const CORE: PageContent = {
         <>
           That&rsquo;s our{" "}
           <a
-            href="https://services.wisdmlabs.com/migration"
+            href="https://services.wisdmlabs.com/woocommerce-migration-services"
             className="font-medium text-ink underline hover:text-navy"
           >
             Migration Risk Assessment
