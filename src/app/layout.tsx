@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { GoogleTags } from "@/components/GoogleTags";
+import { MetaPixel } from "@/components/MetaPixel";
 import { HashScrollFix } from "@/components/HashScrollFix";
 import "./globals.css";
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={inter.variable}>
       <body>
         <GoogleTags />
+        <MetaPixel />
         <HashScrollFix />
         {children}
       </body>

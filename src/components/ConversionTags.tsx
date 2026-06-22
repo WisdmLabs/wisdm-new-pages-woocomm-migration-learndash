@@ -8,10 +8,14 @@ const ADS_LABEL = process.env.NEXT_PUBLIC_GADS_CONVERSION_LABEL;
 
 export function ConversionTags() {
   useEffect(() => {
-    if (!window.gtag) return;
-    if (GA4_ID) window.gtag("event", "generate_lead", { value: 1 });
-    if (ADS_ID && ADS_LABEL) {
-      window.gtag("event", "conversion", { send_to: `${ADS_ID}/${ADS_LABEL}` });
+    if (window.gtag) {
+      if (GA4_ID) window.gtag("event", "generate_lead", { value: 1 });
+      if (ADS_ID && ADS_LABEL) {
+        window.gtag("event", "conversion", { send_to: `${ADS_ID}/${ADS_LABEL}` });
+      }
+    }
+    if (window.fbq) {
+      window.fbq("track", "Lead");
     }
   }, []);
 
